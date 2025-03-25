@@ -1,10 +1,8 @@
-
 import java.util.Scanner;
-
-import service.SistemPenyewaanKapal;
 import model.Kapal;
 import model.Nahkoda;
 import model.Penyewa;
+import service.SistemPenyewaanKapal;
 
 public class Main {
     public static void main(String[] args) {
