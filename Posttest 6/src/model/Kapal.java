@@ -15,10 +15,23 @@ public abstract class Kapal {
         jumlahKapal++;
     }
 
+    // public static void lihatKapal(ArrayList<Kapal> daftarKapal) {
+    //     System.out.println("\nDaftar Kapal:");
+    //     for (Kapal k : daftarKapal) {
+    //         System.out.println("ID: " + k.idKapal + ", Nama: " + k.nama + ", Stok: " + k.stok);
+    //     }
+    // }
+
     public static void lihatKapal(ArrayList<Kapal> daftarKapal) {
+        if (daftarKapal.isEmpty()) {
+            System.out.println("Belum ada kapal yang tersedia.");
+            return;
+        }
+
         System.out.println("\nDaftar Kapal:");
-        for (Kapal k : daftarKapal) {
-            System.out.println("ID: " + k.idKapal + ", Nama: " + k.nama + ", Stok: " + k.stok);
+        for (int i = 0; i < daftarKapal.size(); i++) {
+            Kapal k = daftarKapal.get(i);
+            System.out.println((i + 1) + ". " + k.getNama() + " (ID: " + k.getIdKapal() + ", Stok: " + k.getStok() + ")");
         }
     }
 

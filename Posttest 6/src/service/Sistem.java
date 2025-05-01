@@ -28,6 +28,7 @@ public class Sistem {
     }
 
     public static void hapusKapal() {
+        Kapal.lihatKapal(daftarKapal);
         System.out.print("Masukkan ID Kapal yang ingin dihapus: ");
         String id = input.nextLine();
         boolean ditemukan = false;
@@ -47,6 +48,7 @@ public class Sistem {
     }
 
     public static void hapusPenyewa() {
+        Penyewa.lihatPenyewa(daftarPenyewa);
         System.out.print("Masukkan ID Penyewa yang ingin dihapus: ");
         String id = input.nextLine();
         boolean ditemukan = false;

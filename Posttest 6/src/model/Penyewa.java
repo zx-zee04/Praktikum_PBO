@@ -16,6 +16,11 @@ public class Penyewa implements Sewa {
     }
 
     public static void lihatPenyewa(ArrayList<Penyewa> daftarPenyewa) {
+        if (daftarPenyewa.isEmpty()) {
+            System.out.println("Belum ada penyewa yang terdaftar.");
+            return;
+        }
+        
         System.out.println("\nDaftar Penyewa:");
         for (Penyewa p : daftarPenyewa) {
             System.out.println("ID: " + p.idPenyewa + ", Nama: " + p.nama + ", No. Telepon: " + p.noTelp + ", Kapal Disewa: " + (p.idKapal == null ? "Tidak ada" : p.idKapal));
