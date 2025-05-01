@@ -2,9 +2,10 @@ package model;
 
 public class KapalCepat extends Kapal {
     private final int kecepatan;
+    private static int counter = 1;
 
-    public KapalCepat(String idKapal, String nama, int stok, int kecepatan) {
-        super(idKapal, nama, stok);
+    public KapalCepat(String nama, int stok, int kecepatan) {
+        super(String.format("KC%03d", counter++), nama, stok);
         this.kecepatan = kecepatan;
     }
 

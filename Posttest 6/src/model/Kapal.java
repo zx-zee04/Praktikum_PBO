@@ -22,6 +22,13 @@ public abstract class Kapal {
         }
     }
 
+    public static void Tespolymorphism(ArrayList<Kapal> daftarKapal) {
+        System.out.println("\nDaftar Kapal:");
+        for (Kapal k : daftarKapal) {
+            System.out.println("ID: " + k.idKapal + ", Nama: " + k.nama + ", Stok: " + k.stok);
+        }
+    }
+
     public static int getJumlahKapal() {
         return jumlahKapal;
     }

@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import model.Kapal;
 import model.KapalCepat;
-import model.Nahkoda;
 import model.Penyewa;
 
 public class Sistem {
     public static ArrayList<Kapal> daftarKapal = new ArrayList<>();
     public static ArrayList<Penyewa> daftarPenyewa = new ArrayList<>();
-    public static ArrayList<Nahkoda> daftarNahkoda = new ArrayList<>();
     private static final Scanner input = new Scanner(System.in);
+    private static int penyewaCounter = 1;
 
     public static void tambahKapal() {
-        System.out.print("Masukkan ID Kapal: ");
-        String id = input.nextLine();
         System.out.print("Masukkan Nama Kapal: ");
         String nama = input.nextLine();
         System.out.print("Masukkan Stok Kapal: ");
@@ -24,54 +21,89 @@ public class Sistem {
         System.out.print("Masukkan Kecepatan Kapal (Knot): ");
         int kecepatan = input.nextInt();
         input.nextLine();
-    
-        Kapal kapalBaru = new KapalCepat(id, nama, stok, kecepatan);
+
+        Kapal kapalBaru = new KapalCepat(nama, stok, kecepatan);
         daftarKapal.add(kapalBaru);
-        System.out.println("Kapal berhasil ditambahkan!");
+        System.out.println("Kapal berhasil ditambahkan dengan ID: " + kapalBaru.getIdKapal());
+    }
+
+    public static void hapusKapal() {
+        System.out.print("Masukkan ID Kapal yang ingin dihapus: ");
+        String id = input.nextLine();
+        boolean ditemukan = false;
+
+        for (int i = 0; i < daftarKapal.size(); i++) {
+            if (daftarKapal.get(i).getIdKapal().equals(id)) {
+                daftarKapal.remove(i);
+                System.out.println("Kapal dengan ID " + id + " berhasil dihapus.");
+                ditemukan = true;
+                break;
+            }
+        }
+
+        if (!ditemukan) {
+            System.out.println("Kapal dengan ID tersebut tidak ditemukan.");
+        }
+    }
+
+    public static void hapusPenyewa() {
+        System.out.print("Masukkan ID Penyewa yang ingin dihapus: ");
+        String id = input.nextLine();
+        boolean ditemukan = false;
+
+        for (int i = 0; i < daftarPenyewa.size(); i++) {
+            if (daftarPenyewa.get(i).getIdPenyewa().equals(id)) {
+                daftarPenyewa.remove(i);
+                System.out.println("Penyewa dengan ID " + id + " berhasil dihapus.");
+                ditemukan = true;
+                break;
+            }
+        }
+
+        if (!ditemukan) {
+            System.out.println("Penyewa dengan ID tersebut tidak ditemukan.");
+        }
     }
 
     public static void tambahPenyewa() {
-        System.out.print("Masukkan ID Penyewa: ");
-        String id = input.nextLine();
+        String id = String.format("P%03d", penyewaCounter++);
         System.out.print("Masukkan Nama Penyewa: ");
         String nama = input.nextLine();
         System.out.print("Masukkan No. Telepon: ");
         String noTelp = input.nextLine();
 
-        daftarPenyewa.add(new Penyewa(id, nama, noTelp));
-        System.out.println("Penyewa berhasil ditambahkan!");
-    }
-
-    public static void tambahNahkoda() {
-        System.out.print("Masukkan ID Nahkoda: ");
-        String id = input.nextLine();
-        System.out.print("Masukkan Nama Nahkoda: ");
-        String nama = input.nextLine();
-        System.out.print("Masukkan No. Telepon Nahkoda: ");
-        String noTelp = input.nextLine();
-
-        daftarNahkoda.add(new Nahkoda(id, nama, noTelp));
-        System.out.println("Nahkoda berhasil ditambahkan!");
-    }
-
-    public static void sewaKapal() {
-        System.out.print("Masukkan ID Penyewa: ");
-        String idPenyewa = input.nextLine();
-
-        for (Penyewa p : daftarPenyewa) {
-            if (p.getIdPenyewa().equals(idPenyewa)) {
-                System.out.print("Masukkan ID Kapal: ");
-                String idKapal = input.nextLine();
-                for (Kapal k : daftarKapal) {
-                    if (k.getIdKapal().equals(idKapal) && k.getStok() > 0) {
-                        p.setIdKapal(idKapal);
-                        k.setStok(k.getStok() - 1);
-                        System.out.println("Kapal berhasil disewa oleh " + p.getNama());
-                        return;
-                    }
-                }
-                System.out.println("Kapal tidak tersedia!");
-            }
+        if (daftarKapal.isEmpty()) {
+            System.out.println("Tidak ada kapal tersedia untuk disewa.");
+            return;
         }
+
+        System.out.println("\nPilih Kapal yang Ingin Disewa:");
+        for (int i = 0; i < daftarKapal.size(); i++) {
+            Kapal k = daftarKapal.get(i);
+            System.out.println((i + 1) + ". " + k.getNama() + " (ID: " + k.getIdKapal() + ", Stok: " + k.getStok() + ")");
+        }
+
+        System.out.print("Masukkan nomor kapal: ");
+        int pilihan = input.nextInt();
+        input.nextLine();
+
+        if (pilihan < 1 || pilihan > daftarKapal.size()) {
+            System.out.println("Pilihan tidak valid!");
+            return;
+        }
+
+        Kapal kapalDipilih = daftarKapal.get(pilihan - 1);
+        if (kapalDipilih.getStok() <= 0) {
+            System.out.println("Kapal tidak tersedia!");
+            return;
+        }
+
+        Penyewa penyewaBaru = new Penyewa(id, nama, noTelp);
+        penyewaBaru.setIdKapal(kapalDipilih.getIdKapal());
+        daftarPenyewa.add(penyewaBaru);
+
+        kapalDipilih.setStok(kapalDipilih.getStok() - 1);
+        System.out.println("Penyewa berhasil ditambahkan dan kapal disewa!");
     }
+
 }
