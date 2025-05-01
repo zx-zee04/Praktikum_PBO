@@ -37,9 +37,9 @@ public abstract class Kapal {
 
     public static void Tespolymorphism(ArrayList<Kapal> daftarKapal) {
         System.out.println("\nDaftar Kapal:");
-        for (Kapal k : daftarKapal) {
-            System.out.println("ID: " + k.idKapal + ", Nama: " + k.nama + ", Stok: " + k.stok);
-        }
+            for (Kapal k : daftarKapal) {
+                k.infoKapal(); // polymorphism
+            }
     }
 
     public static int getJumlahKapal() {

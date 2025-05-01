@@ -41,11 +41,16 @@ public class Main {
                     case 8 -> Kapal.Tespolymorphism(Sistem.daftarKapal);
                     case 9 -> {
                         if (Sistem.daftarPenyewa.isEmpty()) {
-                            Penyewa penyewa = new Penyewa("P001", "Dina", "08123456789");
-                            Sistem.daftarPenyewa.add(penyewa);
-                        }
-                        for (Penyewa p : Sistem.daftarPenyewa) {
-                            p.cetakIdentitas();
+                            System.out.println("Daftar penyewa kosong. Menambahkan penyewa default...");
+                            Penyewa penyewaDefault = new Penyewa("P001", "Dina", "08123456789");
+                            Sistem.daftarPenyewa.add(penyewaDefault);
+                            for (Penyewa p : Sistem.daftarPenyewa) {
+                                p.cetakIdentitas();
+                            }
+                        } else {
+                            for (Penyewa p : Sistem.daftarPenyewa) {
+                                p.cetakIdentitas();
+                            }
                         }
                     }
                     default -> System.out.println("Pilihan tidak valid!");
