@@ -1,7 +1,7 @@
 package model;
 
 public class KapalCepat extends Kapal {
-    private int kecepatan;
+    private final int kecepatan;
 
     public KapalCepat(String idKapal, String nama, int stok, int kecepatan) {
         super(idKapal, nama, stok);

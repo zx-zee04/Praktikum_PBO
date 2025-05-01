@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import model.Kapal;
 import model.KapalCepat;
@@ -8,7 +9,7 @@ import service.Sistem;
 public class Main {
     public static void main(String[] args) {
         try (Scanner input = new Scanner(System.in)) {
-            int pilihan;
+            int pilihan = 0;
             do {
                 System.out.println("\n===== SISTEM PENYEWAAN KAPAL =====");
                 System.out.println("1. Tambah Kapal");
@@ -21,9 +22,16 @@ public class Main {
                 System.out.println("8. Keluar");
                 System.out.println("9. Tes Polymorphism (infoKapal & overloading)");
                 System.out.println("10. Tes Final Method (cetakIdentitas)");
+                System.out.println("11. Tes Static & Interface");
                 System.out.print("Pilih menu: ");
-                pilihan = input.nextInt();
-                input.nextLine();
+                try {
+                    pilihan = input.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Input harus berupa angka!");
+                    input.nextLine(); // Clear buffer
+                    continue;
+                }
+                input.nextLine(); 
 
                 switch (pilihan) {
                     case 1 -> Sistem.tambahKapal();
@@ -35,23 +43,27 @@ public class Main {
                     case 7 -> Sistem.sewaKapal();
                     case 8 -> System.out.println("Terima kasih telah menggunakan sistem penyewaan kapal.");
                     case 9 -> {
-                        // Polymorphism + Overriding + Overloading
                         Kapal kapal = new KapalCepat("KC002", "Super Jet", 2, 55);
-                        kapal.infoKapal(); // Abstract method yang dioverride
-
+                        kapal.infoKapal();
                         if (kapal instanceof KapalCepat kc) {
-                            kc.tampilkanInfo();           // Overloading tanpa parameter
-                            kc.tampilkanInfo(true);       // Overloading dengan parameter
+                            kc.tampilkanInfo();
+                            kc.tampilkanInfo(true);
                         }
                     }
                     case 10 -> {
-                        // Tes final method
                         if (Sistem.daftarPenyewa.isEmpty()) {
                             Penyewa penyewa = new Penyewa("P001", "Dina", "08123456789");
                             Sistem.daftarPenyewa.add(penyewa);
                         }
                         for (Penyewa p : Sistem.daftarPenyewa) {
-                            p.cetakIdentitas(); // Final method
+                            p.cetakIdentitas();
+                        }
+                    }
+                    case 11 -> {
+                        System.out.println("Total kapal: " + Kapal.getJumlahKapal());
+                        if (!Sistem.daftarPenyewa.isEmpty()) {
+                            Sistem.daftarPenyewa.get(0).prosesSewa();
+                            Sistem.daftarPenyewa.get(0).infoPenyewa();
                         }
                     }
                     default -> System.out.println("Pilihan tidak valid!");

@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Penyewa {
+public class Penyewa implements Sewa {
     private String idPenyewa;
     private String nama;
     private String noTelp;
@@ -56,5 +56,16 @@ public class Penyewa {
 
     public final void cetakIdentitas() {
         System.out.println("Penyewa: " + nama + ", No.Telp: " + noTelp);
+    }
+
+    // Implementasi interface
+    @Override
+    public void prosesSewa() {
+        System.out.println("Penyewa " + nama + " sedang memproses penyewaan kapal...");
+    }
+
+    @Override
+    public void infoPenyewa() {
+        System.out.println("ID: " + idPenyewa + ", Nama: " + nama + ", No.Telp: " + noTelp);
     }
 }

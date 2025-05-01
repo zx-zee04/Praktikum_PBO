@@ -3,14 +3,16 @@ package model;
 import java.util.ArrayList;
 
 public abstract class Kapal {
-    private final String idKapal; 
+    private final String idKapal;
     private String nama;
     protected int stok;
+    private static int jumlahKapal = 0;
 
     public Kapal(String idKapal, String nama, int stok) {
         this.idKapal = idKapal;
         this.nama = nama;
         this.stok = stok;
+        jumlahKapal++;
     }
 
     public static void lihatKapal(ArrayList<Kapal> daftarKapal) {
@@ -18,6 +20,10 @@ public abstract class Kapal {
         for (Kapal k : daftarKapal) {
             System.out.println("ID: " + k.idKapal + ", Nama: " + k.nama + ", Stok: " + k.stok);
         }
+    }
+
+    public static int getJumlahKapal() {
+        return jumlahKapal;
     }
 
     public String getIdKapal() {
@@ -43,5 +49,6 @@ public abstract class Kapal {
             System.out.println("Stok tidak boleh negatif!");
         }
     }
+
     public abstract void infoKapal();
 }
